@@ -31,10 +31,31 @@ public class PostControllerV1 {
         return postManager.getPostById(postId);
     }
     
+//    @RequestMapping(value = "/", method = RequestMethod.GET, 
+//            params={"startDate", "endDate"})
+//    List<Post> getPostsByDate(@RequestParam("startDate") Long startDate, 
+//            @RequestParam("endDate") Long endDate) {
+//        return Collections.emptyList();
+//    }
+//    
+//    @RequestMapping(value = "/", method = RequestMethod.GET,
+//            params={"author"})
+//    List<Post> getPostsByAuthor(@RequestParam("author") String author) {
+//        return postManager.getPostsByAuthor(author);
+//    }
+    
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    List<Post> getPostsByDate(@RequestParam("startDate") Long startDate, 
-            @RequestParam("endDate") Long endDate) {
-        return Collections.emptyList();
+    List<Post> getPostsByParams(
+            @RequestParam(value = "startDate", required = false) Long startDate,
+            @RequestParam(value = "endDate", required = false) Long endDate,
+            @RequestParam(value = "author", required = false) String author) {
+        if (startDate != null && endDate != null) {
+            return Collections.emptyList();
+        } else if (author != null) {
+            return postManager.getPostsByAuthor(author);
+        } else {
+            return Collections.emptyList();
+        }
     }
     
     @RequestMapping(value = "/", method = RequestMethod.POST)
