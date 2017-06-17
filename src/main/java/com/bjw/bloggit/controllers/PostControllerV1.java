@@ -31,19 +31,6 @@ public class PostControllerV1 {
         return postManager.getPostById(postId);
     }
     
-//    @RequestMapping(value = "/", method = RequestMethod.GET, 
-//            params={"startDate", "endDate"})
-//    List<Post> getPostsByDate(@RequestParam("startDate") Long startDate, 
-//            @RequestParam("endDate") Long endDate) {
-//        return Collections.emptyList();
-//    }
-//    
-//    @RequestMapping(value = "/", method = RequestMethod.GET,
-//            params={"author"})
-//    List<Post> getPostsByAuthor(@RequestParam("author") String author) {
-//        return postManager.getPostsByAuthor(author);
-//    }
-    
     @RequestMapping(value = "/", method = RequestMethod.GET)
     List<Post> getPostsByParams(
             @RequestParam(value = "startDate", required = false) Long startDate,
