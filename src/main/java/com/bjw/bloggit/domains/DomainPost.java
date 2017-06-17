@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "posts")
-public class Post {
+public class DomainPost {
 
     @Id
     @Column(name = "post_id")
@@ -99,7 +99,7 @@ public class Post {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Post other = (Post) obj;
+        DomainPost other = (DomainPost) obj;
         if (author == null) {
             if (other.author != null)
                 return false;

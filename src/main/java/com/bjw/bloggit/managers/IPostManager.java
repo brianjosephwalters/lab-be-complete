@@ -2,20 +2,20 @@ package com.bjw.bloggit.managers;
 
 import java.util.List;
 
-import com.bjw.bloggit.domains.Post;
+import com.bjw.bloggit.domains.DomainPost;
 
 public interface IPostManager {
 
-    List<Post> getAllPosts();
+    List<DomainPost> getAllPosts();
     
-    Post getPostById(Long postId);
+    DomainPost getPostById(Long postId);
     
-    List<Post> getPostsByAuthor(String author);
+    List<DomainPost> getPostsByAuthor(String author);
     
-    Post createPost(Post post);
+    DomainPost createPost(DomainPost post);
     
-    Post updatePost(Long postId, Post post);
+    DomainPost updatePost(Long postId, DomainPost post);
     
-    Post deletePost(Long postId);
+    DomainPost deletePost(Long postId);
     
 }

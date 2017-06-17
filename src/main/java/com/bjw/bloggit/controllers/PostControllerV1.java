@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bjw.bloggit.domains.Post;
+import com.bjw.bloggit.domains.DomainPost;
 import com.bjw.bloggit.managers.IPostManager;
 
 @RestController
@@ -22,17 +22,17 @@ public class PostControllerV1 {
     private IPostManager postManager;
     
     @RequestMapping(method = RequestMethod.GET)
-    List<Post> getAllPosts() {
+    List<DomainPost> getAllPosts() {
         return postManager.getAllPosts();
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    Post getPost(Long postId) {
+    DomainPost getPost(Long postId) {
         return postManager.getPostById(postId);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    List<Post> getPostsByParams(
+    List<DomainPost> getPostsByParams(
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             @RequestParam(value = "author", required = false) String author) {
@@ -46,17 +46,17 @@ public class PostControllerV1 {
     }
     
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    Post createPost(@RequestBody Post post) {
+    DomainPost createPost(@RequestBody DomainPost post) {
         return postManager.createPost(post);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
-    Post updatePost(@PathVariable Long postId, @RequestBody Post post) {
+    DomainPost updatePost(@PathVariable Long postId, @RequestBody DomainPost post) {
         return postManager.updatePost(postId, post);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
-    Post deletePost(@PathVariable Long postId) {
+    DomainPost deletePost(@PathVariable Long postId) {
         return postManager.deletePost(postId);
     }
     

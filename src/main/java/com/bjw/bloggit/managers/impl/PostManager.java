@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bjw.bloggit.accessors.IPostAccessor;
-import com.bjw.bloggit.domains.Post;
+import com.bjw.bloggit.domains.DomainPost;
 import com.bjw.bloggit.managers.IPostManager;
 
 @Component
@@ -17,28 +17,28 @@ public class PostManager implements IPostManager {
     private IPostAccessor postAccessor;
     
     @Override
-    public List<Post> getAllPosts() {
+    public List<DomainPost> getAllPosts() {
         return postAccessor.findAll();
     }
 
     @Override
-    public Post getPostById(Long postId) {
+    public DomainPost getPostById(Long postId) {
         return postAccessor.findOne(postId);
     }
 
     @Override
-    public List<Post> getPostsByAuthor(String author) {
+    public List<DomainPost> getPostsByAuthor(String author) {
         return postAccessor.findAllByAuthor(author);
     }
 
     @Override
-    public Post createPost(Post post) {
+    public DomainPost createPost(DomainPost post) {
         return postAccessor.save(post);
     }
 
     @Override
-    public Post updatePost(Long postId, Post post) {
-        Post currentPost = postAccessor.findOne(postId);
+    public DomainPost updatePost(Long postId, DomainPost post) {
+        DomainPost currentPost = postAccessor.findOne(postId);
         if (currentPost == null || post.getPostId() != postId) {
             return null;
         }
@@ -46,8 +46,8 @@ public class PostManager implements IPostManager {
     }
 
     @Override
-    public Post deletePost(Long postId) {
-        Post post = postAccessor.findOne(postId);
+    public DomainPost deletePost(Long postId) {
+        DomainPost post = postAccessor.findOne(postId);
         if (post == null) {
             return null;
         }
