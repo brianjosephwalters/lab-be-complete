@@ -1,7 +1,10 @@
 package com.bjw.bloggit.managers.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,7 +39,7 @@ public class PostManager implements IPostManager {
     public ViewPost getPostById(Long postId) {
         DomainPost domainPost = postAccessor.findOne(postId);
         if (domainPost == null) {
-            return null;
+            throw new EntityNotFoundException("Unable to retrieve post: " + postId.toString());
         }
         return postConverter.domainToView(domainPost);
     }
@@ -58,8 +61,10 @@ public class PostManager implements IPostManager {
     @Override
     public ViewPost updatePost(Long postId, ViewPost post) {
         DomainPost currentPost = postAccessor.findOne(postId);
-        if (currentPost == null || post.getPostId() != postId) {
-            return null;
+        if (currentPost == null) {
+            throw new EntityNotFoundException("Unable to retrieve post: " + postId.toString());
+        } else if (post.getPostId() != postId) {
+            throw new InvalidParameterException("Provided post id: " + postId + " does not match provided post: " + post);
         }
         return  postConverter.domainToView(
                     postAccessor.save(
@@ -70,7 +75,7 @@ public class PostManager implements IPostManager {
     public ViewPost deletePost(Long postId) {
         DomainPost post = postAccessor.findOne(postId);
         if (post == null) {
-            return null;
+            throw new EntityNotFoundException("Unable to retrieve post: " + postId.toString());
         }
         postAccessor.delete(postId);
         return postConverter.domainToView(post);

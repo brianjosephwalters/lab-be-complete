@@ -4,11 +4,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bjw.bloggit.domains.DomainPost;
@@ -23,42 +26,42 @@ public class PostControllerV1 {
     private IPostManager postManager;
     
     @RequestMapping(method = RequestMethod.GET)
-    List<ViewPost> getAllPosts() {
-        return postManager.getAllPosts();
+    ResponseEntity<List<ViewPost>> getAllPosts() {
+        return new ResponseEntity<>(postManager.getAllPosts(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    ViewPost getPost(@PathVariable("postId") Long postId) {
-        return postManager.getPostById(postId);
+    ResponseEntity<ViewPost> getPost(@PathVariable("postId") Long postId) {
+        return new ResponseEntity<>(postManager.getPostById(postId), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    List<ViewPost> getPostsByParams(
+    ResponseEntity<List<ViewPost>> getPostsByParams(
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             @RequestParam(value = "author", required = false) String author) {
         if (startDate != null && endDate != null) {
-            return postManager.getPostsInDateRange(startDate, endDate);
+            return new ResponseEntity<>(postManager.getPostsInDateRange(startDate, endDate), HttpStatus.OK);
         } else if (author != null) {
-            return postManager.getPostsByAuthor(author);
+            return new ResponseEntity<>(postManager.getPostsByAuthor(author), HttpStatus.OK);
         } else {
-            return Collections.emptyList();
+            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
     }
     
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    ViewPost createPost(@RequestBody ViewPost post) {
-        return postManager.createPost(post);
+    ResponseEntity<ViewPost> createPost(@RequestBody ViewPost post) {
+        return new ResponseEntity<>(postManager.createPost(post), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
-    ViewPost updatePost(@PathVariable Long postId, @RequestBody ViewPost post) {
-        return postManager.updatePost(postId, post);
+    ResponseEntity<ViewPost> updatePost(@PathVariable Long postId, @RequestBody ViewPost post) {
+        return new ResponseEntity<>(postManager.updatePost(postId, post), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
-    ViewPost deletePost(@PathVariable Long postId) {
-        return postManager.deletePost(postId);
+    ResponseEntity<ViewPost> deletePost(@PathVariable Long postId) {
+        return new ResponseEntity<>(postManager.deletePost(postId), HttpStatus.OK);
     }
     
 }
