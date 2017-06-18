@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.bjw.bloggit.accessors.IPostAccessor;
 import com.bjw.bloggit.converters.IPostConverter;
 import com.bjw.bloggit.domains.DomainPost;
+import com.bjw.bloggit.engines.IPostEngine;
 import com.bjw.bloggit.managers.IPostManager;
 import com.bjw.bloggit.views.ViewPost;
 
@@ -20,6 +21,9 @@ public class PostManager implements IPostManager {
     
     @Autowired
     private IPostConverter postConverter;
+    
+    @Autowired
+    private IPostEngine postEngine;
     
     @Override
     public List<ViewPost> getAllPosts() {
@@ -70,6 +74,16 @@ public class PostManager implements IPostManager {
         }
         postAccessor.delete(postId);
         return postConverter.domainToView(post);
+    }
+
+    @Override
+    public List<ViewPost> getPostsInDateRange(Long startDate, Long endDate) {
+        return postAccessor.findAll().stream()
+                .map(postConverter::domainToView)
+                .filter(post -> {
+                    return postEngine.isPostInDateRange(post, startDate, endDate);
+                })
+                .collect(Collectors.toList());
     }
 
 }

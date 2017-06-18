@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,6 +15,7 @@ public class DomainPost {
 
     @Id
     @Column(name = "post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
     
     @Column(name = "title")
@@ -24,11 +27,11 @@ public class DomainPost {
     @Column(name = "author")
     private String author;
     
-    @Column(name = "created_on", insertable = false)
-    private LocalDateTime lastUpdated;
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
     
     @Column(name = "last_updated")
-    private LocalDateTime createdOn;
+    private LocalDateTime lastUpdated;
 
     public Long getPostId() {
         return postId;

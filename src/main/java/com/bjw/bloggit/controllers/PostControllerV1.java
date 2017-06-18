@@ -28,7 +28,7 @@ public class PostControllerV1 {
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    ViewPost getPost(Long postId) {
+    ViewPost getPost(@PathVariable("postId") Long postId) {
         return postManager.getPostById(postId);
     }
     
@@ -38,7 +38,7 @@ public class PostControllerV1 {
             @RequestParam(value = "endDate", required = false) Long endDate,
             @RequestParam(value = "author", required = false) String author) {
         if (startDate != null && endDate != null) {
-            return Collections.emptyList();
+            return postManager.getPostsInDateRange(startDate, endDate);
         } else if (author != null) {
             return postManager.getPostsByAuthor(author);
         } else {

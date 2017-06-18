@@ -13,6 +13,8 @@ public interface IPostManager {
     
     List<ViewPost> getPostsByAuthor(String author);
     
+    List<ViewPost> getPostsInDateRange(Long startDate, Long endDate);
+    
     ViewPost createPost(ViewPost post);
     
     ViewPost updatePost(Long postId, ViewPost post);
