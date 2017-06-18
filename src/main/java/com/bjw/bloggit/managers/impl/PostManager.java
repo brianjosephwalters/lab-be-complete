@@ -1,14 +1,16 @@
 package com.bjw.bloggit.managers.impl;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bjw.bloggit.accessors.IPostAccessor;
+import com.bjw.bloggit.converters.IPostConverter;
 import com.bjw.bloggit.domains.DomainPost;
 import com.bjw.bloggit.managers.IPostManager;
+import com.bjw.bloggit.views.ViewPost;
 
 @Component
 public class PostManager implements IPostManager {
@@ -16,43 +18,58 @@ public class PostManager implements IPostManager {
     @Autowired
     private IPostAccessor postAccessor;
     
+    @Autowired
+    private IPostConverter postConverter;
+    
     @Override
-    public List<DomainPost> getAllPosts() {
-        return postAccessor.findAll();
+    public List<ViewPost> getAllPosts() {
+        return postAccessor.findAll().stream()
+                .map(postConverter::domainToView)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public DomainPost getPostById(Long postId) {
-        return postAccessor.findOne(postId);
+    public ViewPost getPostById(Long postId) {
+        DomainPost domainPost = postAccessor.findOne(postId);
+        if (domainPost == null) {
+            return null;
+        }
+        return postConverter.domainToView(domainPost);
     }
 
     @Override
-    public List<DomainPost> getPostsByAuthor(String author) {
-        return postAccessor.findAllByAuthor(author);
+    public List<ViewPost> getPostsByAuthor(String author) {
+        return postAccessor.findAllByAuthor(author).stream()
+                .map(postConverter::domainToView)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public DomainPost createPost(DomainPost post) {
-        return postAccessor.save(post);
+    public ViewPost createPost(ViewPost post) {
+        return postConverter.domainToView(
+                  postAccessor.save(
+                      postConverter.viewToDomain(post)));
     }
 
     @Override
-    public DomainPost updatePost(Long postId, DomainPost post) {
+    public ViewPost updatePost(Long postId, ViewPost post) {
         DomainPost currentPost = postAccessor.findOne(postId);
         if (currentPost == null || post.getPostId() != postId) {
             return null;
         }
-        return postAccessor.save(post);
+        return  postConverter.domainToView(
+                    postAccessor.save(
+                        postConverter.viewToDomain(post)));
     }
 
     @Override
-    public DomainPost deletePost(Long postId) {
+    public ViewPost deletePost(Long postId) {
         DomainPost post = postAccessor.findOne(postId);
         if (post == null) {
             return null;
         }
         postAccessor.delete(postId);
-        return post;
+        return postConverter.domainToView(post);
     }
 
 }

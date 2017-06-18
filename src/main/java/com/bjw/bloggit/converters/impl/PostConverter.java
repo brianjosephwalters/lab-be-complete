@@ -1,4 +1,4 @@
-package com.bjw.bloggit.accessors.impl;
+package com.bjw.bloggit.converters.impl;
 
 import java.time.LocalDateTime;
 

@@ -3,19 +3,20 @@ package com.bjw.bloggit.managers;
 import java.util.List;
 
 import com.bjw.bloggit.domains.DomainPost;
+import com.bjw.bloggit.views.ViewPost;
 
 public interface IPostManager {
 
-    List<DomainPost> getAllPosts();
+    List<ViewPost> getAllPosts();
     
-    DomainPost getPostById(Long postId);
+    ViewPost getPostById(Long postId);
     
-    List<DomainPost> getPostsByAuthor(String author);
+    List<ViewPost> getPostsByAuthor(String author);
     
-    DomainPost createPost(DomainPost post);
+    ViewPost createPost(ViewPost post);
     
-    DomainPost updatePost(Long postId, DomainPost post);
+    ViewPost updatePost(Long postId, ViewPost post);
     
-    DomainPost deletePost(Long postId);
+    ViewPost deletePost(Long postId);
     
 }

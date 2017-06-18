@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bjw.bloggit.domains.DomainPost;
 import com.bjw.bloggit.managers.IPostManager;
+import com.bjw.bloggit.views.ViewPost;
 
 @RestController
 @RequestMapping("/api/v1/post")
@@ -22,17 +23,17 @@ public class PostControllerV1 {
     private IPostManager postManager;
     
     @RequestMapping(method = RequestMethod.GET)
-    List<DomainPost> getAllPosts() {
+    List<ViewPost> getAllPosts() {
         return postManager.getAllPosts();
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.GET)
-    DomainPost getPost(Long postId) {
+    ViewPost getPost(Long postId) {
         return postManager.getPostById(postId);
     }
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    List<DomainPost> getPostsByParams(
+    List<ViewPost> getPostsByParams(
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             @RequestParam(value = "author", required = false) String author) {
@@ -46,17 +47,17 @@ public class PostControllerV1 {
     }
     
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    DomainPost createPost(@RequestBody DomainPost post) {
+    ViewPost createPost(@RequestBody ViewPost post) {
         return postManager.createPost(post);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.PUT)
-    DomainPost updatePost(@PathVariable Long postId, @RequestBody DomainPost post) {
+    ViewPost updatePost(@PathVariable Long postId, @RequestBody ViewPost post) {
         return postManager.updatePost(postId, post);
     }
     
     @RequestMapping(value = "/{postId}", method = RequestMethod.DELETE)
-    DomainPost deletePost(@PathVariable Long postId) {
+    ViewPost deletePost(@PathVariable Long postId) {
         return postManager.deletePost(postId);
     }
     
