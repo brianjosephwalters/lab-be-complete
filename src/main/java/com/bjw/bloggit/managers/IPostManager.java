@@ -2,20 +2,23 @@ package com.bjw.bloggit.managers;
 
 import java.util.List;
 
-import com.bjw.bloggit.domains.Post;
+import com.bjw.bloggit.domains.DomainPost;
+import com.bjw.bloggit.views.ViewPost;
 
 public interface IPostManager {
 
-    List<Post> getAllPosts();
+    List<ViewPost> getAllPosts();
     
-    Post getPostById(Long postId);
+    ViewPost getPostById(Long postId);
     
-    List<Post> getPostsByAuthor(String author);
+    List<ViewPost> getPostsByAuthor(String author);
     
-    Post createPost(Post post);
+    List<ViewPost> getPostsInDateRange(Long startDate, Long endDate);
     
-    Post updatePost(Long postId, Post post);
+    ViewPost createPost(ViewPost post);
     
-    Post deletePost(Long postId);
+    ViewPost updatePost(Long postId, ViewPost post);
+    
+    ViewPost deletePost(Long postId);
     
 }

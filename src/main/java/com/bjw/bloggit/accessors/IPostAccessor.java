@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.bjw.bloggit.domains.Post;
+import com.bjw.bloggit.domains.DomainPost;
 
-public interface IPostAccessor extends JpaRepository<Post, Long> {
+public interface IPostAccessor extends JpaRepository<DomainPost, Long> {
 
-    List<Post> findAllByAuthor(String author);
+    List<DomainPost> findAllByAuthor(String author);
     
 }

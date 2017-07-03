@@ -1,34 +1,20 @@
-package com.bjw.bloggit.domains;
+package com.bjw.bloggit.views;
 
-import java.time.LocalDateTime;
+public class ViewPost {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "posts")
-public class Post {
-
-    @Id
-    @Column(name = "post_id")
     private Long postId;
     
-    @Column(name = "title")
     private String title;
     
-    @Column(name = "body")
     private String body;
     
-    @Column(name = "author")
     private String author;
     
-    @Column(name = "created_on", insertable = false)
-    private LocalDateTime lastUpdated;
+    private Long lastUpdated;
     
-    @Column(name = "last_updated")
-    private LocalDateTime createdOn;
+    private Long createdOn;
+    
+    private String summary;
 
     public Long getPostId() {
         return postId;
@@ -62,20 +48,28 @@ public class Post {
         this.author = author;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public Long getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
-    public LocalDateTime getCreatedOn() {
+    public Long getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDateTime createdOn) {
+    public void setCreatedOn(Long createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     @Override
@@ -87,6 +81,7 @@ public class Post {
         result = prime * result + ((createdOn == null) ? 0 : createdOn.hashCode());
         result = prime * result + ((lastUpdated == null) ? 0 : lastUpdated.hashCode());
         result = prime * result + ((postId == null) ? 0 : postId.hashCode());
+        result = prime * result + ((summary == null) ? 0 : summary.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
     }
@@ -99,7 +94,7 @@ public class Post {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Post other = (Post) obj;
+        ViewPost other = (ViewPost) obj;
         if (author == null) {
             if (other.author != null)
                 return false;
@@ -125,6 +120,11 @@ public class Post {
                 return false;
         } else if (!postId.equals(other.postId))
             return false;
+        if (summary == null) {
+            if (other.summary != null)
+                return false;
+        } else if (!summary.equals(other.summary))
+            return false;
         if (title == null) {
             if (other.title != null)
                 return false;
@@ -135,8 +135,8 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post [postId=" + postId + ", title=" + title + ", body=" + body + ", author=" + author
-                + ", lastUpdated=" + lastUpdated + ", createdOn=" + createdOn + "]";
+        return "ViewPost [postId=" + postId + ", title=" + title + ", body=" + body + ", author=" + author
+                + ", lastUpdated=" + lastUpdated + ", createdOn=" + createdOn + ", summary=" + summary + "]";
     }
     
 }
