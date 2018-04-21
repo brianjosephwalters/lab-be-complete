@@ -1,6 +1,7 @@
 package com.bjw.bloggit.converters.impl;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.DomainClassConverter;
@@ -23,7 +24,7 @@ public class PostConverter implements IPostConverter {
     
     @Override
     public DomainPost viewToDomain(ViewPost viewPost) {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
         DomainPost domainPost = new DomainPost();
         domainPost.setPostId(viewPost.getPostId());
         domainPost.setTitle(viewPost.getTitle());
